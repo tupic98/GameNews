@@ -1,6 +1,6 @@
 package com.alvarenga.gamenews.gamenewsuca.api.models
 
 class Login {
-    private var isResponseOk:Boolean = false
-    private lateinit var token:String
+    var isResponseOk:Boolean = false
+    internal lateinit var token:String
 }

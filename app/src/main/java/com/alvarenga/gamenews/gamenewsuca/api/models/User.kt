@@ -2,6 +2,7 @@ package com.alvarenga.gamenews.gamenewsuca.api.models
 
 import com.google.gson.annotations.SerializedName
 
+
 class User{
 
     @SerializedName("_id")
