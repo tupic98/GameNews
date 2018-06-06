@@ -1,3 +1,23 @@
 <resources>
     <string name="app_name">GameNews</string>
+    <string name="news_menu">News</string>
+    <string name="games_menu">Games</string>
+    <string name="league_of_legends_menu">League of legends</string>
+    <string name="dota_menu">Dota</string>
+    <string name="csgo_menu">CSGO</string>
+    <string name="settings_menu">Settings</string>
+    <string name="favorites_menu">Favorites</string>
+    <string name="news_image_description">News image</string>
+    <string name="fav_start_description">fav start</string>
+    <string name="title_activity_login">Sign in</string>
+
+    <!-- Strings related to login -->
+    <string name="prompt_username">Username</string>
+    <string name="prompt_password">Password</string>
+    <string name="action_sign_in">Sign in or register</string>
+    <string name="action_sign_in_short">Sign in</string>
+    <string name="error_invalid_username">This username is invalid</string>
+    <string name="error_invalid_password">This password is too short</string>
+    <string name="error_incorrect_password">This password is incorrect</string>
+    <string name="error_field_required">This field is required</string>
 </resources>
