@@ -26,8 +26,6 @@ class LoginActivity : AppCompatActivity() {
 
         settingViews()
 
-        loginbutton.setOnClickListener{ LoginButtonOperation(it)}
-
         if(savedInstanceState != null){
             usernamefield.apply {
                 (savedInstanceState.getString("username")) }
@@ -54,5 +52,6 @@ class LoginActivity : AppCompatActivity() {
         passwordfield = findViewById(R.id.passwordedit)
         passwordtext = passwordfield.text.toString()
         loginbutton = findViewById(R.id.loginbutton)
+        loginbutton.setOnClickListener{ LoginButtonOperation(it)}
     }
 }
