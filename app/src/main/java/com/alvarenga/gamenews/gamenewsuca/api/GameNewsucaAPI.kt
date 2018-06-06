@@ -1,6 +1,8 @@
 package com.alvarenga.gamenews.gamenewsuca.api
 
 import com.alvarenga.gamenews.gamenewsuca.api.models.Login
+import com.alvarenga.gamenews.gamenewsuca.api.models.News
+import com.alvarenga.gamenews.gamenewsuca.api.models.Player
 import retrofit2.Call
 import retrofit2.http.*
 
@@ -15,5 +17,14 @@ interface GameNewsucaAPI {
         @Field("user") username:String,
         @Field("password") password:String
     ): Call<Login>
+
+    @GET("/news")
+    fun news(@Header("Authorization") autho:String):Call<List<News>>
+
+    @GET("/news/type/list")
+    fun categories(@Header("Authorization") autho:String):Call<List<String>>
+
+    @GET("/players")
+    fun players(@Header("Authorization") autho:String):Call<List<Player>>
 
 }
