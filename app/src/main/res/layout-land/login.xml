@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/grad_bg_login"
+    android:animateLayoutChanges="true"
+    tools:context=".LoginActivity">
+
+    <RelativeLayout
+        android:id="@+id/relative1"
+        android:layout_marginRight="30dp"
+        android:layout_marginLeft="30dp"
+        android:layout_width="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/logo"
+            android:layout_width="200dp"
+            android:layout_height="80dp"
+            android:src="@drawable/gamenewsb"
+            android:adjustViewBounds="true"
+            android:scaleType="fitCenter"/>
+        <RelativeLayout
+            android:id="@+id/RelLogoB"
+            android:layout_below="@+id/logo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <LinearLayout
+                android:id="@+id/loginboxes"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_marginTop="20dp"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:orientation="vertical"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Username:"
+                        android:textAllCaps="true"
+                        android:fontFamily="sans-serif-condensed"
+                        android:textSize="15sp"/>
+                    <EditText
+                        android:id="@+id/usernameedit"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:layout_marginTop="5dp"
+                        android:background="@drawable/login_box"
+                        android:fontFamily="sans-serif-light"
+                        android:paddingLeft="15dp"
+                        android:paddingRight="15dp"
+                        android:textColor="#000"
+                        android:textSize="15sp"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:orientation="vertical"
+                    android:layout_marginTop="20dp"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Password:"
+                        android:textAllCaps="true"
+                        android:fontFamily="sans-serif-condensed"
+                        android:textSize="15sp"/>
+                    <EditText
+                        android:id="@+id/passwordedit"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:layout_marginTop="5dp"
+                        android:background="@drawable/login_box"
+                        android:fontFamily="sans-serif-light"
+                        android:paddingLeft="15dp"
+                        android:paddingRight="15dp"
+                        android:textColor="#000"
+                        android:textSize="15sp"/>
+                </LinearLayout>
+
+            </LinearLayout>
+            
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_below="@+id/loginboxes"
+                android:text="LOGIN"
+                android:background="@drawable/btn_login_bg"
+                android:fontFamily="sans-serif-condensed"
+                android:layout_marginTop="20dp"
+                android:paddingLeft="70dp"
+                android:paddingRight="70dp"
+                android:textAllCaps="false"
+                android:layout_centerHorizontal="true"
+                android:textSize="16dp"/>
+
+        </RelativeLayout>
+        
+    </RelativeLayout>
+
+</RelativeLayout>
