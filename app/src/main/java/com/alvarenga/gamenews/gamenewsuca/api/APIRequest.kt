@@ -6,10 +6,8 @@ import android.content.Intent
 import android.support.v4.app.FragmentManager
 import android.widget.Toast
 import com.alvarenga.gamenews.MainActivity
-import com.alvarenga.gamenews.SignInDialog
 import com.alvarenga.gamenews.gamenewsuca.api.deserializer.TokenDeserializer
 import com.alvarenga.gamenews.gamenewsuca.api.models.Login
-import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import retrofit2.Call
 import retrofit2.Callback
@@ -20,8 +18,6 @@ import java.net.SocketTimeoutException
 
 object APIRequest{
     fun login(user:String, password:String, activity:Activity, fragmentManager:FragmentManager){
-        var signinDialog = SignInDialog() //Instanciando Dialogo
-        signinDialog.show(fragmentManager,"Sign In") //Mostrando Dialogo
         val gson = GsonBuilder()
                 .registerTypeAdapter(Login::class.java,TokenDeserializer())
                 .create() //Constuyendo o creando una instancia de GSon //Paramettros: clase y json en string
@@ -42,12 +38,10 @@ object APIRequest{
                 }
                 else if (!response.body()!!.isResponseOk)
                 {
-                    signinDialog.dismiss()
                     Toast.makeText(activity, response.body()!!.token, Toast.LENGTH_SHORT).show()
                 }
                 else
                 {
-                    signinDialog.dismiss()
                     Toast.makeText(activity, "Something weird happend", Toast.LENGTH_SHORT).show()
                 }
             }
