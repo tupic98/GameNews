@@ -6,13 +6,10 @@ import android.arch.persistence.room.RoomDatabase
 import android.content.Context
 import android.provider.CalendarContract
 import com.alvarenga.gamenews.db.dao.*
-import com.alvarenga.gamenews.db.entity.CategoryEntity
-import com.alvarenga.gamenews.db.entity.FavNewsEntity
-import com.alvarenga.gamenews.db.entity.NewsEntity
-import com.alvarenga.gamenews.db.entity.UserEntity
+import com.alvarenga.gamenews.db.entity.*
 
 @Database(
-        entities = [CategoryEntity::class,FavNewsEntity::class,NewsEntity::class,UserEntity::class],
+        entities = [CategoryEntity::class,FavNewsEntity::class,NewsEntity::class,UserEntity::class,PlayerEntity::class],
         exportSchema = false,
         version = 1
 )
