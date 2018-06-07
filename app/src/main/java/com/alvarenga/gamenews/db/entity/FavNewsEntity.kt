@@ -12,6 +12,6 @@ import android.support.annotation.NonNull
             parentColumns = ["_id"],
             childColumns = ["user_id"],
             onDelete = CASCADE)],
-        primaryKeys = ["user_id","new_id"])
+        primaryKeys = ["user_id","news_id"])
 data class FavNewsEntity(@NonNull @ColumnInfo(name = "user_id") var userID:String="",
                          @NonNull @ColumnInfo(name = "news_id") var newsID:String="")
