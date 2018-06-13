@@ -9,14 +9,12 @@ import com.alvarenga.gamenews.db.dao.*
 import com.alvarenga.gamenews.db.entity.*
 
 @Database(
-        entities = [CategoryEntity::class,FavNewsEntity::class,NewsEntity::class,UserEntity::class,PlayerEntity::class],
+        entities = [NewsEntity::class,UserEntity::class,PlayerEntity::class],
         exportSchema = false,
         version = 1
 )
 abstract class AppDatabase:RoomDatabase(){
 
-    abstract fun categoryDao():CategoryDao
-    abstract fun favNewsDao():FavNewsDao
     abstract fun newsDao():NewsDao
     abstract fun UserDao():UserDao
     abstract fun playerDao():PlayerDao
