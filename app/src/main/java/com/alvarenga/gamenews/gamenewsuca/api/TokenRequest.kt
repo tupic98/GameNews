@@ -3,11 +3,9 @@ package com.alvarenga.gamenews.gamenewsuca.api
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
-import android.support.v4.app.FragmentManager
 import android.widget.Toast
-import com.alvarenga.gamenews.MainActivity
 import com.alvarenga.gamenews.gamenewsuca.api.deserializer.TokenDeserializer
-import com.alvarenga.gamenews.gamenewsuca.api.models.Login
+import com.alvarenga.gamenews.MainActivity
 import com.google.gson.GsonBuilder
 import retrofit2.Call
 import retrofit2.Callback
@@ -16,60 +14,52 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.net.SocketTimeoutException
 
-object APIRequest{
-    fun login(user:String, password:String, activity:Activity, fragmentManager:FragmentManager){
+object TokenRequest{
+    fun login(user:String, password:String, activity:Activity){
         val gson = GsonBuilder()
-                .registerTypeAdapter(Login::class.java,TokenDeserializer())
+                .registerTypeAdapter(String::class.java,TokenDeserializer())
                 .create() //Constuyendo o creando una instancia de GSon //Paramettros: clase y json en string
-        val builder = Retrofit.Builder()
+        val retrofit = Retrofit.Builder()
                 .baseUrl(GameNewsucaAPI.ENDPOINT)
-                .addConverterFactory(GsonConverterFactory.create(gson))
-        val retrofit = builder.build() //Construyendo un nuevo retroit con la baseUrl
+                .addConverterFactory(GsonConverterFactory.create(gson)).build() //Construyendo un nuevo retroit con la baseUrl
         val gameNewsucaAPI = retrofit.create<GameNewsucaAPI>(GameNewsucaAPI::class.java)
         val call = gameNewsucaAPI.login(user,password)
-        call.enqueue(object : Callback<Login>{
-            override fun onResponse(call: Call<Login>?, response: Response<Login>?) {
-                if (response!!.isSuccessful && response.body()!!.isResponseOk)
-                {
-                    Toast.makeText(activity, "Success", Toast.LENGTH_SHORT).show()
-                    saveToken(activity, response.body()!!.token)
-                    activity.startActivity(Intent(activity, MainActivity::class.java))
-                    activity.finish()
+        call.enqueue(object : Callback<String>{
+            override fun onResponse(call: Call<String>?, response: Response<String>?) {
+                if (response!!.isSuccessful) {
+                    saveTokenOnPreferences(activity, response.body()!!)
+                    startMainActivity(activity)
                 }
-                else if (!response.body()!!.isResponseOk)
-                {
-                    Toast.makeText(activity, response.body()!!.token, Toast.LENGTH_SHORT).show()
-                }
-                else
-                {
-                    Toast.makeText(activity, "Something weird happend", Toast.LENGTH_SHORT).show()
+                else{
+                    when(response.code()){
+                        401 -> Toast.makeText(activity,"Wrong Credentials",Toast.LENGTH_SHORT).show()
+                        403 -> Toast.makeText(activity,response.message(),Toast.LENGTH_SHORT).show()
+                        404 -> Toast.makeText(activity,response.message(),Toast.LENGTH_SHORT).show()
+                        else -> {
+                            Toast.makeText(activity,"Unknown error. We will check.", Toast.LENGTH_SHORT).show()
+                        }
+                    }
                 }
             }
-
-            override fun onFailure(call: Call<Login>?, t: Throwable?) {
-                if (t is SocketTimeoutException)
-                {
+            override fun onFailure(call: Call<String>?, t: Throwable?) {
+                if (t is SocketTimeoutException) {
                     Toast.makeText(activity, "Time out", Toast.LENGTH_SHORT).show()
-                }            }
+                }
+            }
         })
-
-
     }
 
-    private fun saveToken(context: Context, token:String) {
+    private fun saveTokenOnPreferences(context: Context, token:String) {
         val sharedpreferences = context.getSharedPreferences("Login", Context.MODE_PRIVATE) ?: return
         with(sharedpreferences.edit()){
             putString("token",token)
             apply()
         }
-        /*val editor = sharedpreferences.edit()
-        editor.putString("token", token)
-        editor.apply()*/
     }
-/*    private fun startMain(activity:Activity) {
+    private fun startMainActivity(activity:Activity) {
         activity.startActivity(Intent(activity, MainActivity::class.java))
         activity.finish()
-    }*/
+    }
 }
 
 /*
