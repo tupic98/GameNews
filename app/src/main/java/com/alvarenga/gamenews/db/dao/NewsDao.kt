@@ -1,16 +1,16 @@
 package com.alvarenga.gamenews.db.dao
 
 import android.arch.lifecycle.LiveData
-import android.arch.persistence.room.Dao
-import android.arch.persistence.room.Insert
-import android.arch.persistence.room.OnConflictStrategy
-import android.arch.persistence.room.Query
+import android.arch.persistence.room.*
 import com.alvarenga.gamenews.db.entity.NewsEntity
 
 @Dao
 interface NewsDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertNew(news:NewsEntity)
+
+    @Update
+    fun updateNew(news:NewsEntity)
 
     @Query("SELECT*FROM NewsEntity")
     fun getAllNews():LiveData<List<NewsEntity>>
