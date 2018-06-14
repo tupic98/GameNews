@@ -3,14 +3,11 @@ package com.alvarenga.gamenews
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import android.os.Handler
-import android.os.PersistableBundle
-import android.support.v4.app.FragmentManager
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
-import android.widget.RelativeLayout
-import com.alvarenga.gamenews.gamenewsuca.api.APIRequest
+import com.alvarenga.gamenews.gamenewsuca.api.TokenRequest
+import kotlinx.android.synthetic.main.login.*
 
 class LoginActivity : AppCompatActivity() {
 
@@ -26,8 +23,7 @@ class LoginActivity : AppCompatActivity() {
 
         settingViews()
 
-        loginbutton.setOnClickListener{LoginButtonOperation(it)}
-
+        loginbutton.setOnClickListener{ LoginButtonOperation(it)}
         if(savedInstanceState != null){
             usernamefield.apply {
                 (savedInstanceState.getString("username")) }
@@ -44,8 +40,7 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun LoginButtonOperation(button:View){
-        var fragmentManager: FragmentManager = supportFragmentManager
-        APIRequest.login(usernamefield.text.toString(),passwordfield.text.toString(),this,fragmentManager)
+        TokenRequest.login(usernamefield.text.toString(),passwordfield.text.toString(),this)
     }
 
     private fun settingViews() {
@@ -54,6 +49,5 @@ class LoginActivity : AppCompatActivity() {
         passwordfield = findViewById(R.id.passwordedit)
         passwordtext = passwordfield.text.toString()
         loginbutton = findViewById(R.id.loginbutton)
-        loginbutton.setOnClickListener{ LoginButtonOperation(it)}
     }
 }
