@@ -3,6 +3,8 @@ package com.alvarenga.gamenews.gamenewsuca.api
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.view.View
+import android.widget.RelativeLayout
 import android.widget.Toast
 import com.alvarenga.gamenews.gamenewsuca.api.deserializer.TokenDeserializer
 import com.alvarenga.gamenews.MainActivity
@@ -15,7 +17,8 @@ import retrofit2.converter.gson.GsonConverterFactory
 import java.net.SocketTimeoutException
 
 object TokenRequest{
-    fun login(user:String, password:String, activity:Activity){
+    fun login(user:String, password:String, activity:Activity, loginfields:RelativeLayout){
+        loginfields.visibility = View.GONE
         val gson = GsonBuilder()
                 .registerTypeAdapter(String::class.java,TokenDeserializer())
                 .create() //Constuyendo o creando una instancia de GSon //Paramettros: clase y json en string
@@ -32,10 +35,20 @@ object TokenRequest{
                 }
                 else{
                     when(response.code()){
-                        401 -> Toast.makeText(activity,"Wrong Credentials",Toast.LENGTH_SHORT).show()
-                        403 -> Toast.makeText(activity,response.message(),Toast.LENGTH_SHORT).show()
-                        404 -> Toast.makeText(activity,response.message(),Toast.LENGTH_SHORT).show()
+                        401 -> {
+                            loginfields.visibility = View.VISIBLE
+                            Toast.makeText(activity,"Wrong Credentials",Toast.LENGTH_SHORT).show()
+                        }
+                        403 -> {
+                            loginfields.visibility = View.VISIBLE
+                            Toast.makeText(activity,response.message(),Toast.LENGTH_SHORT).show()
+                        }
+                        404 -> {
+                            loginfields.visibility = View.VISIBLE
+                            Toast.makeText(activity,response.message(),Toast.LENGTH_SHORT).show()
+                        }
                         else -> {
+                            loginfields.visibility = View.VISIBLE
                             Toast.makeText(activity,"Unknown error. We will check.", Toast.LENGTH_SHORT).show()
                         }
                     }
@@ -43,7 +56,11 @@ object TokenRequest{
             }
             override fun onFailure(call: Call<String>?, t: Throwable?) {
                 if (t is SocketTimeoutException) {
+                    loginfields.visibility = View.VISIBLE
                     Toast.makeText(activity, "Time out", Toast.LENGTH_SHORT).show()
+                }else{
+                    loginfields.visibility = View.VISIBLE
+                    Toast.makeText(activity,"Unknown error. We will check.", Toast.LENGTH_SHORT).show()
                 }
             }
         })
