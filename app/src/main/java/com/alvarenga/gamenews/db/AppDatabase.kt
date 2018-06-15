@@ -18,13 +18,13 @@ abstract class AppDatabase:RoomDatabase(){
     abstract fun newsDao():NewsDao
     abstract fun userDao():UserDao
     abstract fun playerDao():PlayerDao
-    abstract fun gameCategoryEntity():GameCategoryEntity
+    abstract fun gameCategoryDao():GameCategoryDao
 
     companion object {
         private var INSTANCE:AppDatabase? = null
         private val DBNAME:String = "gamenews.db"
 
-        fun getInstance(context: Context):AppDatabase?{
+        fun getInstanceDatabase(context: Context):AppDatabase?{
             if(INSTANCE == null){
                 synchronized(AppDatabase::class){
                     INSTANCE = Room.databaseBuilder(context.applicationContext,
