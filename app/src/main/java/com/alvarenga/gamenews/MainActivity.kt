@@ -33,10 +33,11 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     lateinit var appDB: AppDatabase
     lateinit var newsVM:NewsViewModel
-    var FirstTimeApplicactionInitiated:Boolean = true
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        newsVM = ViewModelProviders.of(this).get(NewsViewModel::class.java)
         if(CheckLogin()){
             setContentView(R.layout.activity_main)
             if(!CheckNetConnection(this))
