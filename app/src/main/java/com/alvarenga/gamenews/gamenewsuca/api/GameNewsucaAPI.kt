@@ -18,15 +18,12 @@ interface GameNewsucaAPI {
     ): Call<String>
 
     @GET("/news")
-    fun news(
-            @Header("Authorization")
-            autho:String
-    ):Call<List<News>>
+    fun news(@Header("Authorization") auth:String):Call<List<News>>
 
     @GET("/news/type/list")
-    fun categories(@Header("Authorization") autho:String):Call<List<String>>
+    fun categories(@Header("Authorization") auth:String):Call<List<String>>
 
     @GET("/players")
-    fun players(@Header("Authorization") autho:String):Call<List<Player>>
+    fun players(@Header("Authorization") auth:String):Call<List<Player>>
 
 }
