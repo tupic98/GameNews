@@ -10,7 +10,7 @@ import com.alvarenga.gamenews.db.entity.PlayerEntity
 @Dao
 interface PlayerDao{
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertPlayer(PlayerEntity:PlayerEntity)
+    fun insertPlayer(vararg PlayerEntity:PlayerEntity)
 
     @Query("SELECT*FROM PlayerEntity WHERE game=:game")
     fun getPlayer(game:String):LiveData<List<PlayerEntity>>
