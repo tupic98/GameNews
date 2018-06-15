@@ -9,7 +9,7 @@ import com.alvarenga.gamenews.db.entity.UserEntity
 @Dao
 interface UserDao{
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertUser(user:UserEntity)
+    fun insertUser(vararg user:UserEntity)
 
     @Query("SELECT*FROM UserEntity WHERE user like :username")
     fun getUserByUsername(username:String):UserEntity
