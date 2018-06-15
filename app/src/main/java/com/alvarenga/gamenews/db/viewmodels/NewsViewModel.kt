@@ -33,5 +33,5 @@ class NewsViewModel(app:Application):AndroidViewModel(app){
     fun deleteAllNews(){
         newsRepository.deleteAllNews()
     }
-    ///trying some stuff
+    
 }
