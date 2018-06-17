@@ -1,7 +1,9 @@
 package com.alvarenga.gamenews
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.Application
+import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.content.Context
 import android.content.Intent
@@ -21,9 +23,12 @@ import android.view.MenuItem
 import android.widget.Toast
 import com.alvarenga.gamenews.db.AppDatabase
 import com.alvarenga.gamenews.db.AppDatabase_Impl
+import com.alvarenga.gamenews.db.entity.GameCategoryEntity
+import com.alvarenga.gamenews.db.viewmodels.GameCategoryViewModel
 import com.alvarenga.gamenews.db.viewmodels.NewsViewModel
 import com.alvarenga.gamenews.extras.Utils.Companion.CheckNetConnection
 import com.alvarenga.gamenews.fragments.NewsFragment
+import com.alvarenga.gamenews.fragments.PerGameFragment
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*
 import org.jetbrains.anko.share
@@ -33,11 +38,16 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     lateinit var appDB: AppDatabase
     lateinit var newsVM:NewsViewModel
-
+    lateinit var gamesVM:GameCategoryViewModel
+    companion object {
+        private val IDGame:Int = 1234567898
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         newsVM = ViewModelProviders.of(this).get(NewsViewModel::class.java)
+        gamesVM = ViewModelProviders.of(this).get(GameCategoryViewModel::class.java)
+        gamesVM.getCategories().observe(this, Observer<List<GameCategoryEntity>> {t -> addCaetogries(t!!)})
         if(CheckLogin()){
             setContentView(R.layout.activity_main)
             if(!CheckNetConnection(this))
@@ -49,7 +59,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                     this, drawer_layout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close)
             drawer_layout.addDrawerListener(toggle)
             toggle.syncState()
-            val fragment:Fragment = NewsFragment()
+            val fragment:Fragment = NewsFragment().newInstance(0)
             supportFragmentManager.beginTransaction().replace(R.id.FrameLayout,fragment).commit()
             supportActionBar!!.title = title
             nav_view.setNavigationItemSelectedListener(this)
@@ -67,54 +77,33 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         }
     }
 
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        menuInflater.inflate(R.menu.main, menu)
-        return true
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
-            R.id.action_settings -> return true
-            else -> return super.onOptionsItemSelected(item)
-        }
-    }
-
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
-        var fragmentTransaction = false
-        var fragment: Fragment? = null
+        var fragment:Fragment? = null
 
         when (item.itemId) {
-            R.id.nav_camera -> {
-                fragment = NewsFragment()
-                fragmentTransaction = true
+            R.id.nav_news -> {
+                fragment = NewsFragment().newInstance(0)
             }
-            R.id.nav_gallery -> {
-                fragment = NewsFragment()
-                fragmentTransaction = true
-            }
-            R.id.nav_slideshow -> {
-                fragment = NewsFragment()
-                fragmentTransaction = true
-            }
-            R.id.nav_manage -> {
-                fragment = NewsFragment()
-                fragmentTransaction = true
+            R.id.nav_favorite -> {
+                fragment = NewsFragment().newInstance(2)
             }
             R.id.nav_settings -> {
-                fragment = NewsFragment()
-                fragmentTransaction = true
+                fragment = NewsFragment().newInstance(0)
             }
             R.id.nav_logout -> {
                 SignOut()
                 fragment = null
-                fragmentTransaction = false
+            }
+            else -> {
+                fragment = PerGameFragment().newInstance(item.title.toString().toLowerCase())
             }
 
         }
-        if(fragmentTransaction){
+        if(fragment != null){
             supportFragmentManager.beginTransaction().replace(R.id.FrameLayout,fragment).commit()
             supportActionBar!!.title = item.title
             item.isChecked = true
+
         }else{
             item.isChecked = false
         }
@@ -138,5 +127,20 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         startActivity(Intent(this, LoginActivity::class.java))
         FileUtils.deleteQuietly(cacheDir)
         finish()
+    }
+
+    private fun addCaetogries(categories:List<GameCategoryEntity>){
+        var id:Int = 0
+        nav_view.menu.findItem(R.id.games_categories).subMenu.clear()
+        for(category in categories){
+            println(category)
+            nav_view.menu.findItem(R.id.games_categories)
+                    .subMenu.setGroupEnabled(R.id.games_groupy,true)
+            nav_view.menu.findItem(R.id.games_categories)
+                    .subMenu
+                    .add(R.id.games_groupy, IDGame+id,id, category.cateogryname.toUpperCase())
+                    .setCheckable(true)
+                    .setIcon(R.drawable.ic_gamepad_black_24dp)
+        }
     }
 }
