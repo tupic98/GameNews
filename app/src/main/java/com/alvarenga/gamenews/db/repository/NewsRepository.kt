@@ -42,7 +42,7 @@ class NewsRepository constructor(app:Application) {
     init {
         val database = AppDatabase.getInstanceDatabase(app)
         newsDao = database!!.newsDao()
-        var sharedPreferences = app.getSharedPreferences("Login", Context.MODE_PRIVATE)
+        sharedPreferences = app.getSharedPreferences("Login", Context.MODE_PRIVATE)
         logintoken = sharedPreferences.getString("token","")
         NewsRequestFromAPI()
     }
@@ -69,9 +69,18 @@ class NewsRepository constructor(app:Application) {
                     Log.d("Successful","Fetching data")
                     for (news in response!!.body()!!){
                         insertNew(NewsEntity(news.id,news.title.trimEnd(),news.coverImage,news.date,news.description.trimEnd(),news.body,news.game))
+                        insertNew(NewsEntity(news.id,news.title.trimEnd(),news.coverImage,news.date,news.description.trimEnd(),news.body,news.game,0))
                     }
                 }
-
+                when(response.code()){
+                    401 -> {
+                        with(sharedPreferences.edit()){
+                            clear()
+                            apply()
+                        }
+                        Toast.makeText(context,"Session expired",Toast.LENGTH_SHORT).show()
+                    }
+                }
             }
         })
     }
@@ -99,6 +108,13 @@ class NewsRepository constructor(app:Application) {
         doAsync {
             newsDao.deleteAllFromTable()
         }
+    }
+
+    fun deleteFav(id:String){
+        doAsync {
+            newsDao.deleteFav(id)
+        }
+
     }
 
     fun getNewsByQuery(query:String):LiveData<List<NewsEntity>>{
