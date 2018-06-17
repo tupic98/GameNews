@@ -2,37 +2,51 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     tools:showIn="navigation_view">
-
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/nav_camera"
-            android:icon="@drawable/ic_menu_camera"
-            android:title="Import" />
-        <item
-            android:id="@+id/nav_gallery"
-            android:icon="@drawable/ic_menu_gallery"
-            android:title="Gallery" />
-        <item
-            android:id="@+id/nav_slideshow"
-            android:icon="@drawable/ic_menu_slideshow"
-            android:title="Slideshow" />
-        <item
-            android:id="@+id/nav_manage"
-            android:icon="@drawable/ic_menu_manage"
-            android:title="Tools" />
+            android:id="@+id/title_news"
+            android:title="News">
+            <menu>
+                <group android:checkableBehavior="single">
+                    <item
+                        android:id="@+id/nav_news"
+                        android:icon="@drawable/ic_news_black_24dp"
+                        android:title="All news" />
+                    <item
+                        android:id="@+id/nav_favorite"
+                        android:icon="@drawable/ic_fav_black_24dp"
+                        android:title="Favorite news" />
+                </group>
+            </menu>
+        </item>
     </group>
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/games_categories"
+            android:title="Games">
+            <menu>
+                <group android:id="@+id/games_groupy"
+                    android:checkableBehavior="single">
 
-    <item android:title="User">
-        <menu>
-            <item
-                android:id="@+id/nav_settings"
-                android:icon="@drawable/ic_settings_black_24dp"
-                android:title="Settings" />
-            <item
-                android:id="@+id/nav_logout"
-                android:icon="@drawable/ic_logout_black_24dp"
-                android:title="Sign Out" />
-        </menu>
-    </item>
-
+                </group>
+            </menu>
+        </item>
+    </group>
+    <group android:checkableBehavior="single">
+        <item android:id="@+id/User_section"
+            android:title="User">
+            <menu>
+                <group android:checkableBehavior="single">
+                    <item
+                        android:id="@+id/nav_settings"
+                        android:icon="@drawable/ic_settings_black_24dp"
+                        android:title="Settings" />
+                    <item
+                        android:id="@+id/nav_logout"
+                        android:icon="@drawable/ic_logout_black_24dp"
+                        android:title="Sign Out" />
+                </group>
+            </menu>
+        </item>
+    </group>
 </menu>

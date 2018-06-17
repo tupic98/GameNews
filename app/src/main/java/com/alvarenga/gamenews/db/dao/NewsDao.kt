@@ -18,6 +18,9 @@ interface NewsDao {
     @Query("SELECT*FROM NewsEntity WHERE title=:title")
     fun getNewByTitle(title:String):LiveData<List<NewsEntity>>
 
+    @Query("SELECT*FROM NewsEntity WHERE title like :query ORDER BY create_date DESC")
+    fun getNewByQuery(query: String): LiveData<List<NewsEntity>>
+
     @Query("DELETE FROM NewsEntity")
     fun deleteAllFromTable()
 }

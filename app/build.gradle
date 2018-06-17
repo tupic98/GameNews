@@ -88,6 +88,12 @@ dependencies {
     // Coroutine listeners for Anko Layouts
     implementation "org.jetbrains.anko:anko-sdk25-coroutines:$anko_version"
     implementation "org.jetbrains.anko:anko-appcompat-v7-coroutines:$anko_version"
-
-
+    //DAGGER
+    implementation 'com.google.dagger:dagger:2.16'
+    kapt 'com.google.dagger:dagger-compiler:2.16'
+    implementation 'com.google.dagger:dagger-android:2.16'
+    implementation 'com.google.dagger:dagger-android-support:2.16' // if you use the support libraries
+    kapt 'com.google.dagger:dagger-android-processor:2.16'
+    //Volley
+    implementation 'com.android.volley:volley:1.1.0'
 }

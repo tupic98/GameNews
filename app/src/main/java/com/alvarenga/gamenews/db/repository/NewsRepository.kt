@@ -2,6 +2,7 @@ package com.alvarenga.gamenews.db.repository
 
 import android.app.Application
 import android.arch.lifecycle.LiveData
+import android.arch.lifecycle.MutableLiveData
 import android.content.Context
 import android.content.SharedPreferences
 import com.alvarenga.gamenews.db.AppDatabase
@@ -19,13 +20,19 @@ import retrofit2.converter.gson.GsonConverterFactory
 import android.os.AsyncTask
 import android.util.Log
 import android.widget.Toast
+import com.android.volley.NetworkResponse
+import com.bumptech.glide.load.engine.Resource
 import kotlinx.coroutines.experimental.android.UI
+import okhttp3.OkHttpClient
 import org.jetbrains.anko.doAsync
 import java.net.SocketTimeoutException
+import java.sql.Time
 import java.util.*
+import java.util.concurrent.TimeUnit
+import javax.inject.Inject
 
 
-class NewsRepository(app:Application) {
+class NewsRepository constructor(app:Application) {
 
     var newsDao:NewsDao
     var logintoken:String
@@ -39,8 +46,6 @@ class NewsRepository(app:Application) {
         logintoken = sharedPreferences.getString("token","")
         NewsRequestFromAPI()
     }
-
-
 
     fun NewsRequestFromAPI(){
         val gson = GsonBuilder()
@@ -95,23 +100,9 @@ class NewsRepository(app:Application) {
             newsDao.deleteAllFromTable()
         }
     }
-/*    private class InsertAsyncTask internal constructor(private val AsyncTaskNewsDAO: NewsDao) : AsyncTask<NewsEntity, Void, Void>() {
 
-        override fun doInBackground(vararg newsEntities: NewsEntity): Void? {
-            AsyncTaskNewsDAO.insertNew(newsEntities[0])
-            return null
-        }
-    }*/
+    fun getNewsByQuery(query:String):LiveData<List<NewsEntity>>{
+        return newsDao.getNewByQuery(query)
+    }
 
-    /*    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertNew(news:NewsEntity)
-
-    @Query("SELECT*FROM NewsEntity")
-    fun getAllNews():LiveData<List<NewsEntity>>
-
-    @Query("SELECT*FROM NewsEntity WHERE game=:game")
-    fun getNewsByGame(game:String):LiveData<List<NewsEntity>>
-
-    @Query("SELECT*FROM NewsEntity WHERE title like :query")
-    fun getNewByQuery(query:String):LiveData<List<NewsEntity>>*/
 }

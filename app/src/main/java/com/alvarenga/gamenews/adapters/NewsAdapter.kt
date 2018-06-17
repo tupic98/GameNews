@@ -26,7 +26,6 @@ class NewsAdapter(private val context:Context):RecyclerView.Adapter<NewsAdapter.
 
         holder.title.text = news.title
         holder.desc.text = news.description
-
         Picasso.get().load(news.coverImage)
                 .resize(360,115)
                 .centerCrop()
@@ -51,7 +50,5 @@ class NewsAdapter(private val context:Context):RecyclerView.Adapter<NewsAdapter.
         var desc:TextView = itemView.findViewById(R.id.NewsDesc)
         var coverImage:ImageView = itemView.findViewById(R.id.NewsImage)/*
         var favoriteButton:ImageButton = itemView.findViewById(R.id.FavNewsImage)*/
-
-
     }
 }

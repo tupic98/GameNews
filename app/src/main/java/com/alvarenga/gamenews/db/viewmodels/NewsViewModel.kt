@@ -30,6 +30,10 @@ class NewsViewModel(app:Application):AndroidViewModel(app){
         return newsRepository.getNewByTitle(title)
     }
 
+    fun getNewsByQuery(query:String):LiveData<List<NewsEntity>>{
+        return newsRepository.getNewsByQuery(query)
+    }
+
     fun deleteAllNews(){
         newsRepository.deleteAllNews()
     }
