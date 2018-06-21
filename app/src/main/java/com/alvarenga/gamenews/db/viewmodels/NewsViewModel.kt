@@ -37,5 +37,9 @@ class NewsViewModel(app:Application):AndroidViewModel(app){
     fun deleteAllNews(){
         newsRepository.deleteAllNews()
     }
-    
+
+    fun deleteFav(id:String){
+        newsRepository.deleteFav(id)
+    }
+
 }

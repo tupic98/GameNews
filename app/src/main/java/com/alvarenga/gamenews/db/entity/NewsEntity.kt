@@ -14,4 +14,4 @@ data class NewsEntity(@NonNull @PrimaryKey @ColumnInfo(name = "_id") var id:Stri
                       @ColumnInfo(name = "description") var description:String = "",
                       @ColumnInfo(name = "body") var body:String = "",
                       @ColumnInfo(name = "game") var game:String = "",
-                      @ColumnInfo(name = "favorites") var favorite:String = "")
+                      @ColumnInfo(name = "favorites") var favorite:Int = 0)
